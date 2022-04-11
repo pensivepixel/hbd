@@ -5,6 +5,7 @@ let img1 = document.getElementById("img1");
 let img2 = document.getElementById("img2");
 let img3 = document.getElementById("img3");
 let wurk4it = 0;
+let lastsel = [-1,-1,-1];
 mcjigger.addEventListener("click", mcjiggerer, false);
 img1.src = imgs[1];
 img2.src = imgs[0];
@@ -13,15 +14,17 @@ img3.src = imgs[2];
 function mcjiggerer() {
     wurk4it++;
     mcjigger.innerText = "Hmm. Something doesn't look right. Click here to re-mcjigger your card."
+    mcjigger.classList.remove('moosic');
     let selection = [Math.floor(3*Math.random()), Math.floor(3*Math.random()), Math.floor(3*Math.random())];
-    console.log("hello " + wurk4it);
+    console.log("hello " + wurk4it + " " + lastsel);
     let winnered = selection[0] == 0 && selection[1] == 1 && selection[2] == 2;
     
-    if(wurk4it < 10 && winnered) { 
-        console.log("NOT SO FAST");
+    if((wurk4it < 10 && winnered) || lastsel.toString() == selection.toString()) { 
+        console.log("NOT SO FAST " + (lastsel.toString() == selection.toString()));
+        lastsel = selection;
         mcjiggerer();
     } else {
-
+        lastsel = selection;
 
         img1.src = imgs[selection[0]];
         img2.src = imgs[selection[1]];
@@ -47,6 +50,7 @@ function mcjiggerer() {
                 console.log(num, audiophile);
                 //oh thas a nice one
                 mcjigger.innerText = "WHAT'S THAT NOISE? I think I'll call it -- " + audiophile + " -- That's catchy. Click to mcjigger.";
+                mcjigger.classList.add('moosic');
             } else {
                 //what a sore looser
                 //u get nuthing
